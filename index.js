@@ -4,6 +4,7 @@ import dotenv from "dotenv"
 import cookieParser from "cookie-parser"
 import {connectDb} from "./config/db.js"
 import userRoutes from "./routes/user.route.js"
+import categoryRoutes from "./routes/category.route.js"
 
 dotenv.config();
 
@@ -22,6 +23,7 @@ app.use(cookieParser())
 //     res.send("Uffff")
 // })
 app.use("/api/users", userRoutes)
+app.use("/api/category", categoryRoutes)
 
 app.listen(port, ()=> {
     console.log(`Servr is running on Port: ${port}`);
