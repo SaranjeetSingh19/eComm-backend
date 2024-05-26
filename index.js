@@ -1,30 +1,33 @@
-import path from "path"
-import express from "express"
-import dotenv from "dotenv"
-import cookieParser from "cookie-parser"
-import {connectDb} from "./config/db.js"
-import userRoutes from "./routes/user.route.js"
-import categoryRoutes from "./routes/category.route.js"
+import path from "path";
+import express from "express";
+import dotenv from "dotenv";
+import cookieParser from "cookie-parser";
+import { connectDb } from "./config/db.js";
+import userRoutes from "./routes/user.route.js";
+import categoryRoutes from "./routes/category.route.js";
+import productRoutes from "./routes/product.route.js";
+import uploadRoutes from "./routes/upload.route.js";
 
 dotenv.config();
 
-const port =  process.env.PORT || 5000
+const port = process.env.PORT || 5000;
 
-connectDb()
+connectDb();
 
-const app = express()
+const app = express();
 
 app.use(express.json());
-app.use(express.urlencoded({extended: true}))
-app.use(cookieParser())
-
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 // app.get("/", (req,res) => {
 //     res.send("Uffff")
 // })
-app.use("/api/users", userRoutes)
-app.use("/api/category", categoryRoutes)
+app.use("/api/users", userRoutes);
+app.use("/api/category", categoryRoutes);
+app.use("/api/products", productRoutes);
+app.use("/api/upload", uploadRoutes);
 
-app.listen(port, ()=> {
-    console.log(`Servr is running on Port: ${port}`);
-})
+app.listen(port, () => {
+  console.log(`Servr is running on Port: ${port}`);
+});
