@@ -10,6 +10,7 @@ import {
   addProductReview,
   fetchTopProducts,
   fetchNewProducts,
+  filterProducts,
 } from "../controllers/product.controller.js";
 import {
   authenticate,
@@ -25,8 +26,7 @@ app
   .post(authenticate, authorizeAdmin, formidable(), addProduct);
 
 app.route("/allproducts").get(fetchAllProducts);
-app.route("/:id/reviews").post(authenticate, authorizeAdmin, checkId,  addProductReview);
-
+app.route("/:id/reviews").post(authenticate, checkId, addProductReview);
 app.get("/top", fetchTopProducts);
 app.get("/new", fetchNewProducts);
 
@@ -35,5 +35,7 @@ app
   .get(getProductById)
   .put(authenticate, authorizeAdmin, formidable(), updateProductDetails)
   .delete(authenticate, authorizeAdmin, removeProduct);
+
+app.route("/filtered-products").post(filterProducts);
 
 export default app;

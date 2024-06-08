@@ -3,59 +3,64 @@ import Product from "../models/product.model.js";
 
 const addProduct = asyncHandler(async (req, res) => {
   try {
-    const { name, price, description, category, quantity, brand } = req.fields;
+    const { name, description, price, category, quantity, brand } = req.fields;
 
+    // Validation
     switch (true) {
       case !name:
         return res.json({ error: "Name is required" });
-      case !price:
-        return res.json({ error: "Price is required" });
+      case !brand:
+        return res.json({ error: "Brand is required" });
       case !description:
         return res.json({ error: "Description is required" });
+      case !price:
+        return res.json({ error: "Price is required" });
       case !category:
         return res.json({ error: "Category is required" });
       case !quantity:
         return res.json({ error: "Quantity is required" });
-      case !brand:
-        return res.json({ error: "Brand is required" });
     }
 
-    const product = await Product({ ...req.fields });
+    const product = new Product({ ...req.fields });
     await product.save();
     res.json(product);
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.status(400).json(error.message);
   }
 });
 
 const updateProductDetails = asyncHandler(async (req, res) => {
   try {
-    const { name, price, description, category, quantity, brand } = req.fields;
+    const { name, description, price, category, quantity, brand } = req.fields;
 
+    // Validation
     switch (true) {
       case !name:
         return res.json({ error: "Name is required" });
-      case !price:
-        return res.json({ error: "Price is required" });
+      case !brand:
+        return res.json({ error: "Brand is required" });
       case !description:
         return res.json({ error: "Description is required" });
+      case !price:
+        return res.json({ error: "Price is required" });
       case !category:
         return res.json({ error: "Category is required" });
       case !quantity:
         return res.json({ error: "Quantity is required" });
-      case !brand:
-        return res.json({ error: "Brand is required" });
     }
+
     const product = await Product.findByIdAndUpdate(
       req.params.id,
       { ...req.fields },
       { new: true }
     );
-    await product.save();
+
+    await product?.save();
+
     res.json(product);
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.status(400).json(error.message);
   }
 });
@@ -73,12 +78,19 @@ const removeProduct = asyncHandler(async (req, res) => {
 const fetchProducts = asyncHandler(async (req, res) => {
   try {
     const pageSize = 6;
+
     const keyword = req.query.keyword
-      ? { name: { $regex: req.query.keyword, $options: "i" } }
+      ? {
+          name: {
+            $regex: req.query.keyword,
+            $options: "i",
+          },
+        }
       : {};
 
     const count = await Product.countDocuments({ ...keyword });
     const products = await Product.find({ ...keyword }).limit(pageSize);
+
     res.json({
       products,
       page: 1,
@@ -87,7 +99,7 @@ const fetchProducts = asyncHandler(async (req, res) => {
     });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Server error" });
+    res.status(500).json({ error: "Server Error" });
   }
 });
 
@@ -171,7 +183,6 @@ const fetchTopProducts = asyncHandler(async (req, res) => {
   }
 });
 
-
 const fetchNewProducts = asyncHandler(async (req, res) => {
   try {
     const products = await Product.find().sort({ _id: -1 }).limit(5);
@@ -182,8 +193,26 @@ const fetchNewProducts = asyncHandler(async (req, res) => {
   }
 });
 
+const filterProducts = asyncHandler(async (req, res) => {
+  try {
+    const { checked, radio } = req.body;
+
+    let args = {};
+
+    if (checked.length > 0) args.category = checked;
+    if (radio.length) args.price = { $gte: radio[0], $lte: radio[1] };
+
+    const products = await Product.find(args);
+    res.json(products);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Server error... Try again later" });
+  }
+});
+
 export {
   addProduct,
+  filterProducts,
   updateProductDetails,
   removeProduct,
   fetchAllProducts,

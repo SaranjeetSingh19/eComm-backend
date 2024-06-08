@@ -7,6 +7,7 @@ import userRoutes from "./routes/user.route.js";
 import categoryRoutes from "./routes/category.route.js";
 import productRoutes from "./routes/product.route.js";
 import uploadRoutes from "./routes/upload.route.js";
+import orderRoutes from "./routes/order.route.js";
 
 dotenv.config();
 
@@ -24,10 +25,11 @@ app.use("/api/users", userRoutes);
 app.use("/api/category", categoryRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/upload", uploadRoutes);
+app.use("/api/orders", orderRoutes); 
 
 const __dirname = path.resolve();
 app.use("/uploads", express.static(path.join(__dirname + "/uploads")));
 
 app.listen(port, () => {
-  console.log(`Servr is running on Port: ${port}`);
+  console.log(`Server is running on Port: ${port}`);
 });
