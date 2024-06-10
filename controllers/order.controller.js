@@ -9,7 +9,7 @@ function calc(orderItems) {
   );
 
   const shippingPrice = itemsPrice > 200 ? 0 : 70;
-  const taxRate = 15;
+  const taxRate = 0.012;
   const taxPrice = (itemsPrice * taxRate).toFixed(2);
 
   const totalPrice = (
@@ -71,7 +71,7 @@ const createOrder = async (req, res) => {
       totalPrice,
     });
     const createdOrder = await order.save();
-    res.status(201).json(createOrder);
+    res.status(201).json(createdOrder);
   } catch (error) {
     res.status(500).json({ error: error?.message });
   }
@@ -179,6 +179,37 @@ const markOrderAsPaid = async (req, res) => {
   }
 };
 
+// const checkoutFunc = async (req, res) => {
+//   try {
+//     const { products } = req.body;
+
+//     const lineItems = products?.map((product) => ({
+//       price_data: {
+//         currenncy: "inr",
+//         product_data: {
+//           name: product.brand,
+//           images: [product.image],
+//         },
+//         unit_amout: Math.round(product.price),
+//       },
+//       quantity: product.qty,
+//     }));
+
+//     const session = await stripe.checkout.sessions.create({
+//       payment_method_type: ["card"],
+//       line_items: lineItems,
+//       mode: "payment",
+//       success_url: "http://localhost:5173/success",
+//       cancel_url: "http://localhost:5173/cancel",
+//     });
+
+//     res.json({ id: session.id });
+//   } catch (error) {
+//     res.status(500).json({ error: error?.message });
+//   }
+// };
+
+
 const markOrderAsDelivered = async (req, res) => {
   try {
     const order = await Order.findById(req.params.id);
@@ -208,4 +239,5 @@ export {
   findOrderById,
   markOrderAsPaid,
   markOrderAsDelivered,
+//   checkoutFunc,
 };
