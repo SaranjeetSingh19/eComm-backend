@@ -73,6 +73,8 @@ const createOrder = async (req, res) => {
     const createdOrder = await order.save();
     res.status(201).json(createdOrder);
   } catch (error) {
+    console.log(error);
+    
     res.status(500).json({ error: error?.message });
   }
 };
@@ -82,6 +84,8 @@ const getAllOrders = async (req, res) => {
     const orders = await Order.find({}).populate("user", "id username");
     res.json(orders);
   } catch (error) {
+    console.log(error);
+
     res.status(500).json({ error: error?.message });
   }
 };
@@ -91,6 +95,8 @@ const getUserOrders = async (req, res) => {
     const orders = await Order.find({ user: req.user._id });
     res.json(orders);
   } catch (error) {
+    console.log(error);
+    
     res.status(500).json({ error: error?.message });
   }
 };
@@ -110,6 +116,8 @@ const calculateTotalSales = async (req, res) => {
     const totalSales = orders.reduce((sum, order) => sum + order.totalPrice, 0);
     res.json({ totalSales });
   } catch (error) {
+    console.log(error);
+
     res.status(500).json({ error: error?.message });
   }
 };
@@ -134,6 +142,8 @@ const calculateTotalSalesByDate = async (req, res) => {
 
     res.json(salesByDate);
   } catch (error) {
+    console.log(error);
+
     res.status(500).json({ error: error.message });
   }
 };
@@ -152,6 +162,8 @@ const findOrderById = async (req, res) => {
       throw new Error("Order not found");
     }
   } catch (error) {
+    console.log(error);
+
     res.status(500).json({ error: error?.message });
   }
 };
@@ -175,6 +187,8 @@ const markOrderAsPaid = async (req, res) => {
       throw new Error("Order not found");
     }
   } catch (error) {
+    console.log(error);
+
     res.status(500).json({ error: error?.message });
   }
 };
@@ -194,6 +208,8 @@ const markOrderAsDelivered = async (req, res) => {
       throw new Error("Order not found");
     }
   } catch (error) {
+    console.log(error);
+
     res.status(500).json({ error: error?.message });
   }
 };
