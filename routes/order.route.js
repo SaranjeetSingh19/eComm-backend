@@ -32,4 +32,6 @@ app
   .route("/:id/deliver")
   .put(authenticate, authorizeAdmin, markOrderAsDelivered);
 
+  app.put('/mock-payment/:id', markOrderAsPaid);
+
 export default app;

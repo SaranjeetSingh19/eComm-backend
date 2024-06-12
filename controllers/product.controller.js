@@ -22,7 +22,6 @@ const addProduct = asyncHandler(async (req, res) => {
         return res.json({ error: "Quantity is required" });
     }
 
-    console.log(name, description, price, category, quantity, brand, image);
 
     const product = new Product({ ...req.fields });
     await product.save();
@@ -208,7 +207,6 @@ const filterProducts = asyncHandler(async (req, res) => {
     const products = await Product.find(args);
     res.json(products);
   } catch (error) {
-    console.log(error);
     res.status(500).json({ error: "Server error... Try again later" });
   }
 });
