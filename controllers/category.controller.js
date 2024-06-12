@@ -30,7 +30,6 @@ const updateCategory = asyncHandler(async (req, res) => {
 
     const category = await Category.findOne({ _id: categoryId });
 
-   
     if (!category) {
       return res.status(404).json({ error: "Category not found" });
     }
@@ -75,14 +74,14 @@ const readCategory = asyncHandler(async (req, res) => {
     res.json(category);
   } catch (error) {
     console.log(error);
-    res.status(404).json(error?.message)
+    res.status(404).json(error?.message);
   }
 });
 
 export {
   createCategory,
-  updateCategory,
   deleteCategory,
   listCategory,
   readCategory,
+  updateCategory,
 };

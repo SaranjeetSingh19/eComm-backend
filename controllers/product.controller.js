@@ -3,8 +3,8 @@ import Product from "../models/product.model.js";
 
 const addProduct = asyncHandler(async (req, res) => {
   try {
-    const { name, description, price, category, quantity, brand, image } = req.fields;
-
+    const { name, description, price, category, quantity, brand, image } =
+      req.fields;
 
     // Validation
     switch (true) {
@@ -22,7 +22,7 @@ const addProduct = asyncHandler(async (req, res) => {
         return res.json({ error: "Quantity is required" });
     }
 
-    console.log(name, description, price, category, quantity, brand,  image);
+    console.log(name, description, price, category, quantity, brand, image);
 
     const product = new Product({ ...req.fields });
     await product.save();
@@ -125,7 +125,7 @@ const fetchAllProducts = asyncHandler(async (req, res) => {
   try {
     const products = await Product.find({})
       .populate("category")
-      .limit(12)
+      .limit(50)
       .sort({ createAt: -1 });
 
     res.json(products);
@@ -215,13 +215,13 @@ const filterProducts = asyncHandler(async (req, res) => {
 
 export {
   addProduct,
-  filterProducts,
-  updateProductDetails,
-  removeProduct,
-  fetchAllProducts,
-  getProductById,
-  fetchProducts,
   addProductReview,
-  fetchTopProducts,
+  fetchAllProducts,
   fetchNewProducts,
+  fetchProducts,
+  fetchTopProducts,
+  filterProducts,
+  getProductById,
+  removeProduct,
+  updateProductDetails,
 };
