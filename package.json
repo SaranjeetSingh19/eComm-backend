@@ -1,7 +1,6 @@
 {
-  "name": "project-2",
+  "name": "backend",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "type": "module",
   "scripts": {
@@ -25,8 +24,11 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.3.4",
     "multer": "^1.4.5-lts.1",
-    "nodemon": "^3.1.0",
     "openai": "^4.47.2",
     "stripe": "^15.10.0"
+  },
+  "description": "",
+  "devDependencies": {
+    "nodemon": "^3.1.3"
   }
 }
