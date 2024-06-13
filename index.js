@@ -15,8 +15,10 @@ import orderRoutes from "./routes/order.route.js";
 dotenv.config();
 
 const port = process.env.PORT || 5000;
+const mongoURI = process.env.MONGO_URI;
 
-connectDb();
+
+connectDb(mongoURI);
 
 cloudinary.v2.config({
   cloud_name: process.env.CLOUDINARY_CLIENT_NAME,
