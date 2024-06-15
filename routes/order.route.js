@@ -1,4 +1,4 @@
-import express, { Router } from "express";
+import express from "express";
 const app = express.Router();
 
 import {
@@ -9,7 +9,7 @@ import {
   createOrder,
   getAllOrders,
   getUserOrders,
-  countTotalOrders, 
+  countTotalOrders,
   calculateTotalSales,
   calculateTotalSalesByDate,
   findOrderById,
@@ -19,8 +19,8 @@ import {
 
 app
   .route("/")
-  .post(authenticate, createOrder)
-  .get(authenticate, authorizeAdmin, getAllOrders);
+  .get(authenticate, authorizeAdmin, getAllOrders)
+  .post(authenticate, createOrder);
 
 app.route("/my").get(authenticate, getUserOrders);
 app.route("/total-orders").get(countTotalOrders);
@@ -32,6 +32,6 @@ app
   .route("/:id/deliver")
   .put(authenticate, authorizeAdmin, markOrderAsDelivered);
 
-  app.put('/mock-payment/:id', markOrderAsPaid);
+app.put("/mock-payment/:id", markOrderAsPaid);
 
 export default app;

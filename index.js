@@ -17,7 +17,6 @@ dotenv.config();
 const port = process.env.PORT || 5000;
 const mongoURI = process.env.MONGO_URI;
 
-
 connectDb(mongoURI);
 
 cloudinary.v2.config({
@@ -28,34 +27,34 @@ cloudinary.v2.config({
 
 const app = express();
 
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(
-  cors({
-    origin: [
-      "http://localhost:5173",
-      "http://localhost:5000",
-      process.env.CLIENT_URL,
-    ],
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true,
-  })
-);
+app.use(cors());
+// app.use(
+//   cors({
+//     origin: [
+//       "http://localhost:5173",
+//       "http://localhost:5000",
+//       process.env.CLIENT_URL,
+//     ],
+//     methods: ["GET", "POST", "PUT", "DELETE"],
+//     credentials: true,
+//   })
+// );
 
 app.use("/api/users", userRoutes);
+app.use("/api/orders", orderRoutes);
 app.use("/api/category", categoryRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/upload", uploadRoutes);
-app.use("/api/orders", orderRoutes);
 
 app.get("/demo", (req, res) => {
-  res.status(200).send("Testing...")
-})
+  res.status(200).send("Testing...");
+});
 app.get("/", (req, res) => {
-  res.status(200).send("Working...")
-})
+  res.status(200).send("Working...");
+});
 
 app.get("/api/config/paypal", (req, res) => {
   res.send({ clientId: process.env.PAYPAL_CLIENT_ID });
