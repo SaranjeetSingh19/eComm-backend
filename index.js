@@ -64,8 +64,8 @@ app.get("/", (req, res) => {
 //   res.send({ clientId: process.env.PAYPAL_CLIENT_ID });
 // });
 
-const __dirname = path.resolve();
-app.use("/uploads", express.static(path.join(__dirname + "/uploads")));
+// const __dirname = path.resolve();
+// app.use("/uploads", express.static(path.join(__dirname + "/uploads")));
 
 app.listen(port, () => {
   console.log(`Server is running on Port: ${port}`);
