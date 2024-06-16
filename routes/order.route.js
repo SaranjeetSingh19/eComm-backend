@@ -19,18 +19,18 @@ import {
 
 app
   .route("/")
-  .get(authorizeAdmin, getAllOrders)
-  .post(createOrder);
+  .get(authenticate, authorizeAdmin, getAllOrders)
+  .post(authenticate, createOrder);
 
-app.route("/my").get(getUserOrders);
+app.route("/my").get(authenticate, getUserOrders);
 app.route("/total-orders").get(countTotalOrders);
 app.route("/total-sales").get(calculateTotalSales);
 app.route("/total-sales-by-date").get(calculateTotalSalesByDate);
-app.route("/:id").get( findOrderById);
-app.route("/:id/pay").get(markOrderAsPaid);
+app.route("/:id").get(authenticate, findOrderById);
+app.route("/:id/pay").get(authenticate, markOrderAsPaid);
 app
   .route("/:id/deliver")
-  .put(authorizeAdmin, markOrderAsDelivered);
+  .put(authenticate, authorizeAdmin, markOrderAsDelivered);
 
 app.put("/mock-payment/:id", markOrderAsPaid);
 

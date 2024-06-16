@@ -27,7 +27,7 @@ cloudinary.v2.config({
 const app = express();
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded());
 app.use(cookieParser());
 // app.use(
 //   cors({
@@ -40,12 +40,12 @@ app.use(cookieParser());
 //     credentials: true,
 //   })
 // );
-const corsOptions = {
-  origin: 'https://shifsy.vercel.app', // Replace with your Vercel frontend domain
-  optionsSuccessStatus: 200
-};
+// const corsOptions = {
+//   origin: 'https://shifsy.vercel.app', // Replace with your Vercel frontend domain
+//   optionsSuccessStatus: 200
+// };
 
-app.use(cors(corsOptions));
+app.use(cors());
 
 app.use("/api/users", userRoutes);
 app.use("/api/orders", orderRoutes);
@@ -64,9 +64,10 @@ app.get("/", (req, res) => {
 //   res.send({ clientId: process.env.PAYPAL_CLIENT_ID });
 // });
 
-// const __dirname = path.resolve();
-// app.use("/uploads", express.static(path.join(__dirname + "/uploads")));
+const __dirname = path.resolve();
+app.use("/uploads", express.static(path.join(__dirname + "/uploads")));
 
+console.log(process.env.PORT);
 app.listen(port, () => {
   console.log(`Server is running on Port: ${port}`);
 });
