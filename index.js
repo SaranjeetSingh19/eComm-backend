@@ -29,21 +29,6 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded());
 app.use(cookieParser());
-// app.use(
-//   cors({
-//     origin: [
-//       "http://localhost:5173",
-//       "http://localhost:5000",
-//       process.env.CLIENT_URL,
-//     ],
-//     methods: ["GET", "POST", "PUT", "DELETE"],
-//     credentials: true,
-//   })
-// );
-// const corsOptions = {
-//   origin: 'https://shifsy.vercel.app', // Replace with your Vercel frontend domain
-//   optionsSuccessStatus: 200
-// };
 
 app.use(cors());
 
@@ -52,22 +37,14 @@ app.use("/api/orders", orderRoutes);
 app.use("/api/category", categoryRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/upload", uploadRoutes);
-
-app.get("/demo", (req, res) => {
-  res.status(200).send("Testing...");
-});
+ 
 app.get("/", (req, res) => {
   res.status(200).send("Working...");
 });
-
-// app.get("/api/config/paypal", (req, res) => {
-//   res.send({ clientId: process.env.PAYPAL_CLIENT_ID });
-// });
-
+ 
 const __dirname = path.resolve();
 app.use("/uploads", express.static(path.join(__dirname + "/uploads")));
 
-console.log(process.env.PORT);
 app.listen(port, () => {
   console.log(`Server is running on Port: ${port}`);
 });
