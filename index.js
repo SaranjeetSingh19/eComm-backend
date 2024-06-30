@@ -26,8 +26,8 @@ cloudinary.v2.config({
 
 const app = express();
 
-app.use(express.json());
-app.use(express.urlencoded());
+app.use(express.json({ limit: "5mb" })); // to parse body data
+app.use(express.urlencoded({ extended: true })); // to parse body data
 app.use(cookieParser());
 
 app.use(cors());
